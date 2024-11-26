@@ -26,14 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gn^(2cjg@i3wbfr2=k&shi+8ymqqj&ag58b+62q%viw7ze&t4!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
-DEBUG = False
+# DEBUG = False
 
-ALLOWED_HOSTS = ['wbuilder.altivax.com']
+# ALLOWED_HOSTS = ['wbuilder.altivax.com']
 
 
 # Application definition
