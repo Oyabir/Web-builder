@@ -412,3 +412,45 @@ def DemandeSupportNotDoneyetSA(request):
 def history(request):
     history_entries = History.objects.all().order_by('-date_created')
     return render(request, 'SuperAdmin/history.html', {'history_entries': history_entries})
+
+
+
+
+
+@login_required(login_url='login')
+@allowedUsers(allowedGroups=['SuperAdmin']) 
+def WebsiteSuperAdmin(request): 
+    websites = Websites.objects.all()
+    context = {'websites': websites} 
+    return render(request, "SuperAdmin/WebsiteSuperAdmin.html",context)
+
+
+
+
+
+def add_website(request):
+    if request.method == 'POST':
+        # Create a new instance of Websites
+        website = Websites()
+        website.name = request.POST.get('name')
+        website.status = request.POST.get('status')
+        website.prix = request.POST.get('prix')
+        website.prix_loyer = request.POST.get('prix_loyer')
+        website.prix_hebergement = request.POST.get('prix_hebergement')
+        # website.slugWebsites = request.POST.get('slugWebsites')
+
+        # Handle file upload
+        if 'image' in request.FILES:
+            website.image = request.FILES['image']
+
+        website.description = request.POST.get('description')
+        # website.video = request.POST.get('video')
+        website.CMS = request.POST.get('CMS')
+        website.langues = request.POST.get('langues')
+        website.catégorie = request.POST.get('catégorie')
+        website.plan = request.POST.get('plan')
+
+        website.save()
+        return redirect('WebsiteSuperAdmin')  
+
+    return render(request, 'SuperAdmin/addWebsite.html')

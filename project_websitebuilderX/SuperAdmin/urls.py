@@ -50,6 +50,9 @@ urlpatterns = [
 
     
     path('history/', views.history, name='history'),
+    
+    path('WebsiteSuperAdmin/', views.WebsiteSuperAdmin, name='WebsiteSuperAdmin'),
+    path('add_website/',views.add_website, name="add_website"), 
 
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -69,9 +69,11 @@ def dashbordHome(request):
     cliente = request.user.cliente
     WebsiteBuilders = MergedWebsiteBuilder.objects.filter(cliente=cliente).order_by('-date_created')[:6]
     AchatSupports = AchatSupport.objects.filter(cliente=cliente).order_by('-date_created')[:5]
+    facturations = Facturations.objects.filter(cliente=cliente).order_by('-date_created')[:5]
     context = {
         'WebsiteBuilders': WebsiteBuilders,
         'AchatSupports': AchatSupports,
+        'facturations' :facturations,
     }
     return render(request, "clients/dashbordHome.html",context)
 

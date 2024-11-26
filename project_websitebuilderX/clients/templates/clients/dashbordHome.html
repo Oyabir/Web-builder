@@ -465,6 +465,60 @@
                         </div>
          </div> {% endcomment %}
       </div>
+
+
+      <div class="row">
+        <div class="col-md-7 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-title mb-0">Dernier mes Achat supports</p>
+              <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th>Service de nom</th>
+                      {% comment %} <th>Description</th> {% endcomment %}
+                      <th>Prix</th>
+                      <th>Status</th>
+                    </tr>  
+                  </thead>
+                  <tbody>
+                    {% if AchatSupports %}
+                    {% for AchatSupport in AchatSupports %}
+                  <tr>
+                      <td>{{ AchatSupport.support.name }}</td>
+                      {% comment %} <td>{{ AchatSupport.support.description }}</td> {% endcomment %}
+                      <td>{{ AchatSupport.prix }} MAD</td>
+                      {% if AchatSupport.StatusConsomé == 'Not Consomé' %}
+                          <td class="badge badge-danger" style="margin: 9px;padding: 14px;font-size: 13px;">{{ AchatSupport.StatusConsomé }}</td>
+                      {% elif AchatSupport.StatusConsomé == 'Consomé' %}
+                          <td class="badge badge-success" style="margin: 9px;padding: 14px;font-size: 13px;">{{ AchatSupport.StatusConsomé }}</td>
+                      {% else %}
+                          <td>N/A</td>
+                      {% endif %}
+                  </tr>
+                     {% endfor %}   
+                     {% else %}
+                     <tr>
+                         <td colspan="4" class="text-center">There is no Achat Support yet.</td>
+                     </tr>
+                   {% endif %}
+                  </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <img style="width: 375px; height: 282px;" src="{% static "img/test2.png" %}" alt="#">
+                </div>
+            </div>
+          </div>
+      </div>
+
+
       <div class="row">
         {% comment %} <div class="col-md-4 stretch-card grid-margin">
           <div class="card">
@@ -646,7 +700,7 @@
         </div> {% endcomment %}
       </div>
       <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
+        {% comment %} <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
               <p class="card-title">Mes derniers services</p>
@@ -691,10 +745,71 @@
               </div>
             </div>
 
+
+            
             
           </div>
-        </div>
+        </div> {% endcomment %}
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-title">Mes derniers Facturations</p>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-responsive">
+                      <table id="example" class="display expandable-table" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>N°</th>
+                            <th>le nom l'entreprise</th>
+                            <th>Code Facturation</th>
+                            <th>Le Montant</th>
+                            <th>Type</th>
+                            <th>Date de Facturation</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if facturations %}
+                          {% for facturation in facturations %}
+                          <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ facturation.cliente.nom_entreprise }}</td>
+                            <td>{{ facturation.code_facturation }}</td>
+                            {% if facturation.location_website %}
+                            <td>{{ facturation.location_website.prix_loyer }} MAD</td>
+                            {% elif facturation.achat_website %}
+                            <td>{{ facturation.achat_website.prix_achat }} MAD</td>
+                            {% elif facturation.achat_support %}
+                            <td>{{ facturation.achat_support.prix }} MAD</td>
+                            {% else %}
+                                N/A
+                            {% endif %}
+
+                            {% if facturation.location_website %}
+                            <td> <span class="badge badge-success">Location Website</span> </td>
+                            {% elif facturation.achat_website %}
+                            <td> <span class="badge badge-success">Achat Website </span></td>
+                            {% elif facturation.achat_support %}
+                            <td> <span class="badge badge-success">Achat Support </span></td>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                            <td>{{ facturation.date_created|date:"d M Y" }}</td>
+                          </tr>
+                        {% endfor %}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                  </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
     </div>
 
+    
 
     {% endblock %}

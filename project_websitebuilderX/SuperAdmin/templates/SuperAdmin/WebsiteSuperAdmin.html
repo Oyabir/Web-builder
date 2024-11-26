@@ -1,12 +1,24 @@
-{% extends "clients/dashboard2.html" %}
+{% extends "SuperAdmin/dashbordSuperAdmin.html" %}
 
 {% load static %}
 
 {% block content %}
+
  <!-- partial -->
  <div class="main-panel">
   <div class="content-wrapper">
+  {% if messages %}
+  {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
     <div class="row">
+      
+
       {% comment %} <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -60,7 +72,7 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div> {% endcomment %}
       {% comment %} <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -115,22 +127,14 @@
           </div>
         </div>
       </div> {% endcomment %}
-
-      <div class="col-lg-12 grid-margin stretch-card">
-        <div class="container-fluid" id="container-wrapper">
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Solde et Facturations</h1>
-          </div>
-            {% comment %} <a class="btn btn-primary btn-icon-split">
-                <span class="text">Solode 100MAD</span>
-            </a> {% endcomment %}
-            <a href="{% url 'paiement' %}" class="btn btn-primary btn-icon-split">
-                <span class="text">Recharger votre compte</span>
-            </a>
-            <br><br>
+      
+      <a href="{% url 'add_website' %}">
+        <button type="button" class="btn btn-primary" style="margin: 10px">Ajouter Website</button>
+      </a>
+          <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Facturations</h4>
+            <h4 class="card-title">Websites</h4>
             {% comment %} <p class="card-description">
               Add class <code>.table-striped</code>
             </p> {% endcomment %}
@@ -139,44 +143,42 @@
                 <thead>
                   <tr>
                     <th>N°</th>
-                    <th>le nom l'entreprise</th>
-                    <th>Code Facturation</th>
-                    {% comment %} <th>Secteur d'activité</th> {% endcomment %}
-                    <th>Le Montant</th>
-                    <th>Type</th>
-                    <th>Date de Facturation</th>
-                    <th>Facturation PDF</th>
+                    <th>name</th>
+                    <th>status</th>
+                    <th>prix</th>
+                    <th>prix_loyer</th>
+                    <th>prix_hebergement</th>
+                    <th>image</th>
+                    <th>CMS</th>
+                    <th>langues</th>
+                    <th>catégorie</th>
+                    <th>plan</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for facturation in facturations %}
+                  {% for website in websites %}
                   <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ facturation.cliente.nom_entreprise }}</td>
-                    <td>{{ facturation.code_facturation }}</td>
-                    {% if facturation.location_website %}
-                    <td>{{ facturation.location_website.prix_loyer }} MAD</td>
-                    {% elif facturation.achat_website %}
-                    <td>{{ facturation.achat_website.prix_achat }} MAD</td>
-                    {% elif facturation.achat_support %}
-                    <td>{{ facturation.achat_support.prix }} MAD</td>
-                    {% else %}
-                        N/A
-                    {% endif %}
-
-                    {% if facturation.location_website %}
-                    <td> <span class="badge badge-success">Location Website</span> </td>
-                    {% elif facturation.achat_website %}
-                    <td> <span class="badge badge-success">Achat Website </span></td>
-                    {% elif facturation.achat_support %}
-                    <td> <span class="badge badge-success">Achat Support </span></td>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    <td>{{ facturation.date_created|date:"d M Y" }}</td>
-                    <td><a href="{% url 'generate_facturation_pdf' facturation.id %}" class="btn btn-sm btn-primary">PDF</a></td>
+                    <td class="py-1">{{ forloop.counter }}</td>
+                    <td>{{ website.name }}</td>
+                    <td><span class="badge badge-success">{{ website.status }}</span></td>
+                    <td>{{ website.prix }}</td> 
+                    <td>{{ website.prix_loyer }}</td> 
+                    <td>{{ website.prix_hebergement }}</td> 
+                    <td>
+                      <img src="{{ website.image.url }}" alt="Website Image" style="width: 100px; height: 100px;border-radius: 0;">
+                    </td>                    
+                    <td>{{ website.CMS }}</td>
+                    <td>{{ website.langues }}</td>
+                    <td>{{ website.catégorie }}</td>
+                    <td>{{ website.plan }}</td>
+                    <td>
+                      <a href="" class="btn btn-sm btn-primary">Editer</a>
+                      <a href="#" class="btn btn-sm btn-primary">Supprimer</a>
+                    </td>
                   </tr>
                   {% endfor %}
+                  
                 </tbody>
               </table>
             </div>
@@ -184,8 +186,21 @@
         </div>
       </div>
       
+        </div>
+      </div>
+    </div>
+    
+      
+      
     </div>
   </div>
+  
+  
+</div>
+
+</div>
+
+
 
 
 

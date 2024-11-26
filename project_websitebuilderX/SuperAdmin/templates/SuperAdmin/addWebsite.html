@@ -1,0 +1,230 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'form/css/bootstrap.min.css' %}">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'form/css/style.css' %}">
+
+  <title>Add Website</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <img src="{% static 'form/images/undraw_remotely_2j6y.svg' %}" alt="Illustration" class="img-fluid">
+      </div>
+      <div class="col-md-6">
+        <div class="form-container">
+          <h3 class="mb-4">Ajouter un Site Web</h3>
+          <p class="mb-4">Ajouter les détails du site web ci-dessous.</p>
+          
+          {% if messages %}
+            {% for message in messages %}
+              {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{ request.POST.name }}">
+              {% if form.name.errors %}
+                <div class="text-danger">
+                  {% for error in form.name.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control" id="status" name="status">
+                <option value="Active" {% if request.POST.status == "Active" %}selected{% endif %}>Active</option>
+                <option value="No Active" {% if request.POST.status == "No Active" %}selected{% endif %}>No Active</option>
+              </select>
+              {% if form.status.errors %}
+                <div class="text-danger">
+                  {% for error in form.status.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="prix">Price</label>
+              <input type="number" step="0.01" class="form-control" id="prix" name="prix" value="{{ request.POST.prix }}">
+              {% if form.prix.errors %}
+                <div class="text-danger">
+                  {% for error in form.prix.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="prix_loyer">Rental Price</label>
+              <input type="number" step="0.01" class="form-control" id="prix_loyer" name="prix_loyer" value="{{ request.POST.prix_loyer }}">
+              {% if form.prix_loyer.errors %}
+                <div class="text-danger">
+                  {% for error in form.prix_loyer.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="prix_hebergement">Hosting Price</label>
+              <input type="number" step="0.01" class="form-control" id="prix_hebergement" name="prix_hebergement" value="{{ request.POST.prix_hebergement }}">
+              {% if form.prix_hebergement.errors %}
+                <div class="text-danger">
+                  {% for error in form.prix_hebergement.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            {% comment %} <div class="form-group">
+              <label for="slugWebsites">Slug</label>
+              <input type="text" class="form-control" id="slugWebsites" name="slugWebsites" value="{{ request.POST.slugWebsites }}">
+              {% if form.slugWebsites.errors %}
+                <div class="text-danger">
+                  {% for error in form.slugWebsites.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div> {% endcomment %}
+
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="file" class="form-control" id="image" name="image">
+              {% if form.image.errors %}
+                <div class="text-danger">
+                  {% for error in form.image.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" name="description">{{ request.POST.description }}</textarea>
+              {% if form.description.errors %}
+                <div class="text-danger">
+                  {% for error in form.description.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            {% comment %} <div class="form-group">
+              <label for="video">Video URL</label>
+              <input type="text" class="form-control" id="video" name="video" value="{{ request.POST.video }}">
+              {% if form.video.errors %}
+                <div class="text-danger">
+                  {% for error in form.video.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div> {% endcomment %}
+
+            <div class="form-group">
+              <label for="CMS">CMS</label>
+              <select class="form-control" id="CMS" name="CMS">
+                <option value="WordPress" {% if request.POST.CMS == "WordPress" %}selected{% endif %}>WordPress</option>
+                <option value="Drupal" {% if request.POST.CMS == "Drupal" %}selected{% endif %}>Drupal</option>
+              </select>
+              {% if form.CMS.errors %}
+                <div class="text-danger">
+                  {% for error in form.CMS.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="langues">Language</label>
+              <select class="form-control" id="langues" name="langues">
+                <option value="Français" {% if request.POST.langues == "Français" %}selected{% endif %}>Français</option>
+                <option value="Anglais" {% if request.POST.langues == "Anglais" %}selected{% endif %}>Anglais</option>
+              </select>
+              {% if form.langues.errors %}
+                <div class="text-danger">
+                  {% for error in form.langues.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="catégorie">Category</label>
+              <select class="form-control" id="catégorie" name="catégorie">
+                <option value="Ecommerce" {% if request.POST.catégorie == "Ecommerce" %}selected{% endif %}>Ecommerce</option>
+                <option value="Blogs" {% if request.POST.catégorie == "Blogs" %}selected{% endif %}>Blogs</option>
+                <option value="Business" {% if request.POST.catégorie == "Business" %}selected{% endif %}>Business</option>
+                <option value="portfolio" {% if request.POST.catégorie == "portfolio" %}selected{% endif %}>Portfolio</option>
+                <option value="Educational" {% if request.POST.catégorie == "Educational" %}selected{% endif %}>Educational</option>
+                <option value="News" {% if request.POST.catégorie == "News" %}selected{% endif %}>News</option>
+              </select>
+              {% if form.catégorie.errors %}
+                <div class="text-danger">
+                  {% for error in form.catégorie.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="plan">Plan</label>
+              <select class="form-control" id="plan" name="plan">
+                <option value="Free" {% if request.POST.plan == "Free" %}selected{% endif %}>Free</option>
+                <option value="Payant" {% if request.POST.plan == "Payant" %}selected{% endif %}>Payant</option>
+              </select>
+              {% if form.plan.errors %}
+                <div class="text-danger">
+                  {% for error in form.plan.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br><br><br>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <script src="{% static 'form/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'form/js/popper.min.js' %}"></script>
+  <script src="{% static 'form/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'form/js/main.js' %}"></script>
+</body>
+</html>
